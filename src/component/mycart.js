@@ -105,7 +105,8 @@ export default function Mycart() {
         //change this to the script source you want to load, for example this is snap.js sandbox env
         const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
         //change this according to your client-key
-        const myMidtransClientKey = "SB-Mid-client-rIrlvZvI6nm57Qa1";
+        // const myMidtransClientKey = "SB-Mid-client-rIrlvZvI6nm57Qa1";
+        const myMidtransClientKey = process.env.REACT_APP_MIDTRANS_CLIENT_KEY;
 
         let scriptTag = document.createElement("script");
         scriptTag.src = midtransScriptUrl;
