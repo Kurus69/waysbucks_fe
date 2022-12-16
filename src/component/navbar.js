@@ -73,6 +73,7 @@ export default function Header() {
             }
             let payload = response.data.data;
             payload.token = localStorage.token;
+
             dispatch({
                 type: 'USER_SUCCESS',
                 payload,
@@ -81,7 +82,6 @@ export default function Header() {
             // console.log(error);
         }
     }
-
     //Run 1x funct Check User
     useEffect(() => {
         checkUser();

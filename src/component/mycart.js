@@ -25,6 +25,7 @@ export default function Mycart() {
     let TotalPrice = 0
     let Qty = 0
     let IDTrans = 0
+
     if (state.isLogin === true) {
         mycart?.map((element) => (
             TotalPrice += element.subtotal,
@@ -74,44 +75,37 @@ export default function Mycart() {
 
             window.snap.pay(token, {
                 onSuccess: function (result) {
-                    /* You may add your own implementation here */
                     console.log(result);
+                    refetch()
+
                     navigate("/profile");
                 },
                 onPending: function (result) {
-                    /* You may add your own implementation here */
                     console.log(result);
+                    refetch()
                     navigate("/profile");
                 },
                 onError: function (result) {
-                    /* You may add your own implementation here */
+                    refetch()
                     console.log(result);
                 },
                 onClose: function () {
-                    /* You may add your own implementation here */
                     alert("you closed the popup without finishing the payment");
                 },
             });
-
-            // refetch()
-            // navigate('/')
             console.log("Transaksi", response)
+
         } catch (error) {
             console.log(error)
         }
     })
 
     useEffect(() => {
-        //change this to the script source you want to load, for example this is snap.js sandbox env
         const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
-        //change this according to your client-key
-        // const myMidtransClientKey = "SB-Mid-client-rIrlvZvI6nm57Qa1";
-        const myMidtransClientKey = process.env.REACT_APP_MIDTRANS_CLIENT_KEY;
+        const myMidtransClientKey = "SB-Mid-client-rIrlvZvI6nm57Qa1";
 
         let scriptTag = document.createElement("script");
         scriptTag.src = midtransScriptUrl;
-        // optional if you want to set script attribute
-        // for example snap.js have data-client-key attribute
         scriptTag.setAttribute("data-client-key", myMidtransClientKey);
 
         document.body.appendChild(scriptTag);
@@ -124,7 +118,7 @@ export default function Mycart() {
         <>
             <Container>
                 {
-                    IDTrans == 0 ?
+                    IDTrans === 0 ?
                         <NotOrder />
                         :
                         <Card className="border-0">
@@ -146,7 +140,7 @@ export default function Mycart() {
                                                                     <Stack direction="horizontal">
                                                                         <CardImg src={element.product.image} className="thumbnail" style={{ width: '70px', height: '70px' }} />
                                                                         <Card.Body>
-                                                                            <Card.Title style={{ fontWeight: 'bold', marginBottom: '20px', fontSize: '12pt' }}>{element.product.title} {element.transaction_id}</Card.Title>
+                                                                            <Card.Title style={{ fontWeight: 'bold', marginBottom: '20px', fontSize: '12pt' }}>{element.product.title}</Card.Title>
                                                                             <Card.Subtitle style={{ fontWeight: '400', fontSize: '10pt' }}><b style={{ color: '#974A4A' }}>Toping: </b>
                                                                                 {
                                                                                     element.toping.map(topings => (
